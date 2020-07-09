@@ -41,8 +41,13 @@ class Article:
         return len(self.content)
 
     def short_introduction(self, n_characters):
-        pass
+        cutpoints = [" ", "\n"]
+        for character in enumerate(self.content[n_characters::-1]):
+            if character[1] in cutpoints:
+                return self.content[:n_characters-character[0]]
+        else:
+            return self.content[:n_characters]
 
 
 test = Article(title="title", author="author", publication_date=datetime.datetime(
-    1837, 4, 7, 12, 15, 0), content="content")
+    1837, 4, 7, 12, 15, 0), content="123456789abcdefgh ijklmnopqrstuvwxyz")

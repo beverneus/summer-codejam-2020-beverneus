@@ -15,6 +15,8 @@ Important notes for submission:
 """
 import datetime
 import typing
+import re
+import itertools
 
 
 class ArticleField:
@@ -27,5 +29,38 @@ class ArticleField:
 class Article:
     """The `Article` class you need to write for the qualifier."""
 
-    def __init__(self, title: str, author: str, publication_date: datetime.datetime, content: str):
-        pass
+    def __init__(self, title: str, author: str, publication_date:
+                 datetime.datetime, content: str):
+        self.title = title
+        self.author = author
+        self.publication_date = publication_date
+        self.content = content
+
+    def __repr__(self):
+        return f"<Article title=\"{self.title}\" author=\'{self.author}\' publication_date=\'{str(self.publication_date).replace(' ', 'T')}\'>"
+
+    def __len__(self):
+        return len(self.content)
+
+    def short_introduction(self, n_characters: int):
+        cutpoints = [" ", "\n"]  # define characters for short intro end
+        # give a number to every character and loop
+        for character in enumerate(self.content[n_characters::-1]):
+            if character[1] in cutpoints:
+                return self.content[:n_characters-character[0]]
+        # excecutes if no cutpoint is found
+        else:
+            return self.content[:n_characters]
+
+    def most_common_words(self, n_words: int):
+        used = {}
+        # split sentence on non alphabet characters and loop through list
+        for word in re.split('[^a-zA-Z]', self.content):
+            if word.lower() in used:  # check if string is already in the dict
+                used[word.lower()] += 1
+            elif len(word) > 0:  # avoid putting an empty string in the dict
+                used[word.lower()] = 1
+        # sort the list and take the top n_words entries
+        return dict(itertools.islice({key: value for key, value in sorted(
+                                     used.items(), key=lambda item: item[1],
+                                     reverse=True)}.items(), n_words))

@@ -29,12 +29,21 @@ class ArticleField:
 class Article:
     """The `Article` class you need to write for the qualifier."""
 
+    id = 0
+
     def __init__(self, title: str, author: str, publication_date:
                  datetime.datetime, content: str):
         self.title = title
         self.author = author
         self.publication_date = publication_date
         self.content = content
+        self.id = Article.id
+        self.last_edited = None
+        Article.id += 1
+
+##########################
+    # BASIC REQUIREMENTS
+##########################
 
     def __repr__(self):
         return f"<Article title=\"{self.title}\" author=\'{self.author}\' publication_date=\'{str(self.publication_date).replace(' ', 'T')}\'>"
@@ -64,3 +73,22 @@ class Article:
         return dict(itertools.islice({key: value for key, value in sorted(
                                      used.items(), key=lambda item: item[1],
                                      reverse=True)}.items(), n_words))
+
+#######################################
+    # INTERMEDIATE REQUIREMENTS
+#######################################
+
+# executes when reading content
+    @property
+    def content(self):
+        return self._content
+
+# executes when reading content
+    @content.setter
+    def content(self, value):
+        self._content = value
+        self.last_edited = datetime.datetime.now()
+
+# adds support for sorting instances fsfqs
+    def __lt__(self, other):
+        return self.publication_date < other.publication_date

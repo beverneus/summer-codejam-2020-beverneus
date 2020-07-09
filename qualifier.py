@@ -78,14 +78,17 @@ class Article:
     # INTERMEDIATE REQUIREMENTS
 #######################################
 
+# executes when reading content
     @property
     def content(self):
         return self._content
 
+# executes when reading content
     @content.setter
     def content(self, value):
         self._content = value
         self.last_edited = datetime.datetime.now()
 
+# adds support for sorting instances fsfqs
     def __lt__(self, other):
         return self.publication_date < other.publication_date

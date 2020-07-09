@@ -38,7 +38,9 @@ class Article:
         self.publication_date = publication_date
         self.content = content
         self.id = Article.id
+        self.last_edited = None
         Article.id += 1
+
 ##########################
     # BASIC REQUIREMENTS
 ##########################
@@ -75,3 +77,12 @@ class Article:
 #######################################
     # INTERMEDIATE REQUIREMENTS
 #######################################
+
+    @property
+    def content(self):
+        return self._content
+
+    @content.setter
+    def content(self, value):
+        self._content = value
+        self.last_edited = datetime.datetime.now()

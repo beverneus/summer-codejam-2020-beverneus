@@ -86,3 +86,6 @@ class Article:
     def content(self, value):
         self._content = value
         self.last_edited = datetime.datetime.now()
+
+    def __lt__(self, other):
+        return self.publication_date < other.publication_date

@@ -20,11 +20,11 @@ import itertools
 
 
 class ArticleField:
-    """The `ArticleField` class for the Advanced Requirements."""
+    """Checks if assigned value has the correct type,
+       raises a TypeError if it doesn't"""
 
     def __init__(self, field_type: typing.Type[typing.Any]):
         self.type = field_type
-        self.value = {}
 
     def __get__(self, obj, type=None):
         try:

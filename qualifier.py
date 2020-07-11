@@ -23,7 +23,24 @@ class ArticleField:
     """The `ArticleField` class for the Advanced Requirements."""
 
     def __init__(self, field_type: typing.Type[typing.Any]):
-        pass
+        self.type = field_type
+        self.value = {}
+
+    def __get__(self, obj, type=None):
+        try:
+            return self.value[obj]
+        except NameError:
+            return 0
+
+    def __set__(self, obj, value):
+        if not isinstance(value, self.type):
+            raise TypeError(
+                f"expected an instance of type {str(self.type)[7:-1]} for attribute '{self.name}', got {str(type(value))[7:-1]} instead")
+        else:
+            self.value[obj] = value
+
+    def __set_name__(self, owner, name):
+        self.name = name
 
 
 class Article:

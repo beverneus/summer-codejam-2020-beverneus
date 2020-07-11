@@ -28,7 +28,7 @@ class ArticleField:
 
     def __get__(self, obj, type=None):
         try:
-            return self.value[obj]
+            return obj.__dict__.get(self.name)
         except NameError:
             return 0
 
@@ -37,7 +37,7 @@ class ArticleField:
             raise TypeError(
                 f"expected an instance of type {str(self.type)[7:-1]} for attribute '{self.name}', got {str(type(value))[7:-1]} instead")
         else:
-            self.value[obj] = value
+            obj.__dict__[self.name] = value
 
     def __set_name__(self, owner, name):
         self.name = name

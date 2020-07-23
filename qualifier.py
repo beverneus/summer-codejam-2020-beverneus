@@ -58,12 +58,12 @@ class Article:
         self.last_edited = None
         Article.id += 1
 
-##########################
-    # BASIC REQUIREMENTS
-##########################
+#######################################
+        # BASIC REQUIREMENTS
+#######################################
 
     def __repr__(self):
-        return f"<Article title=\"{self.title}\" author=\'{self.author}\' publication_date=\'{str(self.publication_date).replace(' ', 'T')}\'>"
+        return f"<Article title=\'{self.title}\' author=\'{self.author}\' publication_date=\'{str(self.publication_date).replace(' ', 'T')}\'>"
 
     def __len__(self):
         return len(self.content)
@@ -100,12 +100,12 @@ class Article:
     def content(self):
         return self._content
 
-# executes when reading content
+# executes when writing content
     @content.setter
     def content(self, value):
         self._content = value
         self.last_edited = datetime.datetime.now()
 
-# adds support for sorting instances fsfqs
+# adds support for sorting instances
     def __lt__(self, other):
         return self.publication_date < other.publication_date
